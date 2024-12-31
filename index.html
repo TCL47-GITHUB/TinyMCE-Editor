@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        body {
+          margin: 4px;
+          background-color: #d2d2d2;  
+        }
+      .tox-tinymce {
+        height: calc(100vh - 10px) !important;
+        max-width: 900px;
+        margin: 0 auto;
+        border: none;
+      }
+      .tox .tox-edit-area__iframe {
+          padding: .5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <script
+      referrerpolicy="origin"
+      src="https://cdn.tiny.cloud/1/72p2wmzhukdzaek1trm0e36q4c8hifrbmm4k6qlapeu4w0xy/tinymce/6/tinymce.min.js"
+    ></script>
+    <script>
+      tinymce.init({
+        selector: ".tinyMCE",
+        extended_valid_elements:
+          "a[class|name|href|target|title|onclick|rel],script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]",
+        plugins: [
+          "advlist",
+          "autolink",
+          "link",
+          "image",
+          "lists",
+          "charmap",
+          "codesample",
+          "preview",
+          "anchor",
+          "pagebreak",
+          "searchreplace",
+          "wordcount",
+          "visualblocks",
+          "visualchars",
+          "code",
+          "fullscreen",
+          "insertdatetime",
+          "media",
+          "table",
+          "emoticons",
+          "template",
+          "help",
+        ],
+        toolbar:
+          "undo redo fullscreen preview code | styles fontsize | bold italic | link unlink image media | alignleft aligncenter alignright alignjustify | " +
+          "bullist numlist outdent indent | wordcount print | forecolor backcolor emoticons | help",
+        menubar: "file edit view insert format tools table",
+        content_css: "css/content.css",
+        font_size_formats:
+          "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt 60pt 72pt",
+        setup: function (editor) {
+          editor.on("init", function () {
+            // Load content from localStorage
+            const savedContent = localStorage.getItem("editorContent");
+            if (savedContent) {
+              editor.setContent(savedContent);
+            }
+          });
+
+          // Save content to localStorage on every change
+          editor.on("keyup change", function () {
+            const editorContent = editor.getContent();
+            localStorage.setItem("editorContent", editorContent);
+          });
+        },
+      });
+    </script>
+
+    <textarea class="tinyMCE"></textarea>
+
+    <!-- <script>
+      window.onbeforeunload = function () {
+          return "Bạn có chắc chắn muốn rời khỏi trang này không?";
+      };
+    </script> -->
+  </body>
+</html>
